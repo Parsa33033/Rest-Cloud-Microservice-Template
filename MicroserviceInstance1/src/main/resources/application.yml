@@ -1,0 +1,23 @@
+server:
+  port: 8100
+logging:
+  file: app.log  
+spring:  application:    name: parent
+  boot:    admin:      client:        url:        - http://localhost:9000/
+        username: admin
+        password: changeit        instance:          serviceUrl: http://localhost:8100/ 
+management:  endpoints:    web:      exposure:        include: "*"
+  endpoint:    health:      showDetails: always 
+eureka:
+  oauth2:
+    server:
+      name: authorization-server
+  server:
+    username: "admin"
+    password: "changeit"
+    hostname: "localhost"  client:
+    serviceUrl:
+      defaultZone: http://${eureka.server.username}:${eureka.server.password}@${eureka.server.hostname}:8761/eureka    registerWithEureka: true
+    fetchRegistry: true  
+  instance:    leaseRenewalIntervalInSeconds: 5
+    hostname: localhost

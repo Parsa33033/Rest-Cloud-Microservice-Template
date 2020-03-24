@@ -1,0 +1,12 @@
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - /usr/share/filebeat/logs/microservice1/app.log
+    - /usr/share/filebeat/logs/microservice2/app.log
+    - /usr/share/filebeat/logs/microservice3/app.log
+    - /usr/share/filebeat/logs/microservice-zuul/app.log
+    - /usr/share/filebeat/logs/microservice-oauth2-server/app.log                
+output.logstash:
+  hosts:
+    - logstash:5044

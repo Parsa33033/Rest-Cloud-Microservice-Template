@@ -1,0 +1,41 @@
+server:
+  port: 8080
+  ssl:    enabled: true
+    key-store: classpath:gateway-ssl.p12
+    key-store-password: changeit
+    key-alias: gateway-ssl
+    key-password: changeit
+logging:
+  file: app.log    
+spring:  application:    name: gateway
+  boot:    admin:      client:        url:        - http://localhost:9000/
+        username: admin
+        password: changeit
+        instance:          serviceBaseUrl: https://localhost:8080/
+management:  endpoints:    web:      exposure:        include: "*" 
+  endpoint:    health:      showDetails: always
+eureka:
+  server:
+    username: "admin"
+    password: "changeit"
+    hostname: "localhost"  client:    serviceUrl:      defaultZone: http://${eureka.server.username}:${eureka.server.password}@${eureka.server.hostname}:8761/eureka
+    registerWithEureka: true
+    fetchRegistry: true
+  instance:    leaseRenewalIntervalInSeconds: 5
+    hostname: localhost
+    preferIpAddress: true
+    ipAddress: 127.0.0.1 
+    securePortEnabled: true
+    securePort: 8080
+zuul:  sensitiveHeaders:  - Cookie
+  - Set-Cookie
+  routes:    parentInstance:
+      path: /parent/**
+      serviceId: parent
+    authorization-server:
+      path: /auth/**
+      serviceId: authorization-server
+ribbon:  eureka:    enabled: true
+  ReadTimeout: 10000 
+  ConnectTimeout: 10000
+      

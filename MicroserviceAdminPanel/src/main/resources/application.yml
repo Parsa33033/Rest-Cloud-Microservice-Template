@@ -1,0 +1,15 @@
+server:
+  port: 9000
+spring:  application:    name: admin-panel
+eureka:
+  server:
+    username: admin
+    password: changeit
+    hostname: localhost  client:
+    serviceUrl:      defaultZone: http://${eureka.server.username}:${eureka.server.password}@${eureka.server.hostname}:8761/eureka    registerWithEureka: false
+    fetchRegistry: false
+  instance:    leaseRenewalIntervalInSeconds: 5
+admin:
+  username: "admin"
+  password: "changeit"
+  role: "ADMIN"    
